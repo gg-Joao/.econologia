@@ -191,7 +191,6 @@ class IndexUI:
             elif st.session_state.tela == "perfil_morador":
                 PerfilMoradorUI.main()
             else:
-                # Painel padrão
                 PainelMoradorUI.main()
         elif st.session_state.tipo_usuario == "admin":
             if st.session_state.tela == "dashboard_admin":

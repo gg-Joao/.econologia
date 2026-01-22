@@ -7,14 +7,11 @@ from models.coleta import Coleta
 class AgendarColetaUI:
     @staticmethod
     def main():
-        st.header("Agendar Coleta")
-        
-        pontos = PontoColetaDAO.listar()
-        
+        st.header("Agendar Coleta")        
+        pontos = PontoColetaDAO.listar()        
         if not pontos:
             st.error("Nenhum ponto de coleta disponível.")
-            return
-        
+            return       
         opcoes_pontos = {ponto.get_nome(): ponto.get_id() for ponto in pontos}
         
         with st.form("agendar_coleta_form"):

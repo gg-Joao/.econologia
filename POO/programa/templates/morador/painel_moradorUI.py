@@ -6,8 +6,7 @@ class PainelMoradorUI:
     def main():
         st.header("Meu Painel")
         
-        morador = MoradorDAO.buscar_por_id(st.session_state.usuario_id)
-        
+        morador = MoradorDAO.buscar_por_id(st.session_state.usuario_id)        
         if morador:
             col1, col2, col3 = st.columns(3)
             

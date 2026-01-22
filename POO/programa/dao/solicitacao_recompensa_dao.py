@@ -21,7 +21,6 @@ class SolicitacaoRecompensaDAO:
         cursor.execute("SELECT * FROM solicitacao_recompensa")
         dados = cursor.fetchall()
         conn.close()
-
         if dados:
             return [SolicitacaoRecompensa(d[0], d[1], d[2], d[3], d[4]) for d in dados]
         return []

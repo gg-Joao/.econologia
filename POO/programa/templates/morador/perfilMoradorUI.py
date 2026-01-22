@@ -5,9 +5,7 @@ from models.morador import Morador
 class PerfilMoradorUI:
     @staticmethod
     def main():
-        st.header("Meu Perfil")
-        
-      
+        st.header("Meu Perfil")      
         morador = MoradorDAO.buscar_por_id(st.session_state.usuario_id)
         
         if morador:

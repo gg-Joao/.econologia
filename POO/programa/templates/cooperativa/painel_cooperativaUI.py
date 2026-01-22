@@ -75,8 +75,7 @@ class PainelCooperativaUI:
         if not coletas:
             st.info("Nenhuma coleta")
             return
-        
-        coletas_nao_confirmadas = [c for c in coletas if c.get_confirmado() == 0]
+            coletas_nao_confirmadas = [c for c in coletas if c.get_confirmado() == 0]
         
         if not coletas_nao_confirmadas:
             st.info("Todas as coletas já foram confirmadas")
