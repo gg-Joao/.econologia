@@ -11,8 +11,7 @@ class ColetaDAO(BaseDAO):
         cursor.execute(
             "INSERT INTO coleta (data, confirmado, descricao, pontos) VALUES (?, ?, ?, ?)",
             (obj.get_data() if isinstance(obj.get_data(), str) else obj.get_data().isoformat(), 
-             int(obj.get_confirmado()), obj.get_desc(), obj.get_pontos())
-        )
+             int(obj.get_confirmado()), obj.get_desc(), obj.get_pontos()) )
         conn.commit()
         conn.close()
 
