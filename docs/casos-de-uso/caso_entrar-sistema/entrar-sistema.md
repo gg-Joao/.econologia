@@ -17,4 +17,5 @@ O sistema informa erro e solicita nova tentativa.
 
 Fluxo de exceção: Conta inexistente
 O sistema informa que a conta não existe e encerra o processo.
-Modelo de interação associado: Diagrama de sequência.
+
+Modelo de interação associado: Diagrama de Comunicação.
