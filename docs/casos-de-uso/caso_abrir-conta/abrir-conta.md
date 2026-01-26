@@ -13,6 +13,6 @@ Fluxo principal:
  5. O sistema informa que a conta foi criada com sucesso.
 Fluxo de exceção: Dado incompleto ou inválido
 O sistema rejeita o cadastro e solicita a correção dos dados.
-O caso de uso retorna
-ao passo 2.
-Modelo de interação associado: Diagrama de sequência
+O caso de uso retorna ao passo 2.
+
+Modelo de interação associado: Diagrama de comunicação.
