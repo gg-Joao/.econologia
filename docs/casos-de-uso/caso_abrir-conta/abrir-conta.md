@@ -1,5 +1,4 @@
 ## CASO DE USO: Abrir Conta
-CASO DE USO: Abrir Conta
 Atores envolvidos: Usuário (Morador ou Cooperativa)
 Pré-condições: O usuário não possui cadastro no sistema.
 Pós-condições: A conta do usuário é criada e armazenada no sistema.
