@@ -137,7 +137,7 @@ class PainelAdminUI:
                             with col2:
                                 if st.button("Confirmar", key=f"confirmar_{coleta.get_id()}", use_container_width=True):
                                     coleta.set_confirmado(1)
-                                    coleta.set_pontos(10)  # Pontos padrão para coleta confirmada
+                                    coleta.set_pontos(10) 
                                     ColetaDAO.atualizar(coleta)
                                     st.success("Coleta confirmada!")
                                     st.rerun()
@@ -450,8 +450,7 @@ class PainelAdminUI:
         st.header("Gerenciar Cooperativas")
         
         tab1, tab2, tab3 = st.tabs(["Ver Todas", "Criar Nova", "Editar/Deletar"])
-        
-        # TAB 1: VER TODAS AS COOPERATIVAS
+
         with tab1:
             cooperativas = CooperativaDAO.listar()
             
@@ -471,8 +470,7 @@ class PainelAdminUI:
                 st.dataframe(dados, use_container_width=True)
             else:
                 st.info("Nenhuma cooperativa cadastrada.")
-        
-        # TAB 2: CRIAR NOVA COOPERATIVA
+
         with tab2:
             st.subheader("Cadastrar Nova Cooperativa")
             
@@ -503,12 +501,10 @@ class PainelAdminUI:
                         
                         try:
                             CooperativaDAO.inserir(nova_cooperativa)
-                            st.success("✅ Cooperativa cadastrada com sucesso!")
+                            st.success("Cooperativa cadastrada com sucesso!")
                             st.rerun()
                         except Exception as e:
-                            st.error(f"❌ Erro ao cadastrar cooperativa: {str(e)}")
-        
-        # TAB 3: EDITAR OU DELETAR COOPERATIVA
+                            st.error(f"Erro ao cadastrar cooperativa: {str(e)}")
         with tab3:
             cooperativas = CooperativaDAO.listar()
             
@@ -527,7 +523,7 @@ class PainelAdminUI:
                     col1, col2 = st.columns(2)
                     
                     with col1:
-                        st.subheader("📝 Editar Dados")
+                        st.subheader("Editar Dados")
                         with st.form(f"form_editar_cooperativa_{cooperativa_id}"):
                             razao_social = st.text_input("Razão Social", value=cooperativa.get_razao())
                             cnpj = st.text_input("CNPJ", value=str(cooperativa.get_cnpj()))
@@ -535,7 +531,7 @@ class PainelAdminUI:
                             fone = st.text_input("Telefone", value=str(cooperativa.get_fone()))
                             endereco = st.text_area("Endereço", value=cooperativa.get_endereco())
                             
-                            if st.form_submit_button("💾 Salvar Alterações", use_container_width=True):
+                            if st.form_submit_button("Salvar Alterações", use_container_width=True):
                                 cooperativa.set_razao(razao_social)
                                 cooperativa.set_cnpj(cnpj)
                                 cooperativa.set_email(email)
@@ -544,13 +540,13 @@ class PainelAdminUI:
                                 
                                 try:
                                     CooperativaDAO.atualizar(cooperativa)
-                                    st.success("✅ Cooperativa atualizada com sucesso!")
+                                    st.success("Cooperativa atualizada com sucesso!")
                                     st.rerun()
                                 except Exception as e:
-                                    st.error(f"❌ Erro ao atualizar: {str(e)}")
+                                    st.error(f"Erro ao atualizar: {str(e)}")
                     
                     with col2:
-                        st.subheader("📋 Informações Atuais")
+                        st.subheader("Informações Atuais")
                         st.write(f"**ID:** {cooperativa.get_id()}")
                         st.write(f"**Razão Social:** {cooperativa.get_razao()}")
                         st.write(f"**CNPJ:** {cooperativa.get_cnpj()}")
@@ -560,13 +556,13 @@ class PainelAdminUI:
                         
                         st.divider()
                         
-                        if st.button("🗑️ Deletar Cooperativa", use_container_width=True, type="secondary"):
+                        if st.button("Deletar Cooperativa", use_container_width=True, type="secondary"):
                             if st.session_state.get(f"confirmar_delete_{cooperativa_id}", False):
                                 CooperativaDAO.deletar(cooperativa_id)
-                                st.success("✅ Cooperativa deletada com sucesso!")
+                                st.success("Cooperativa deletada com sucesso!")
                                 st.rerun()
                             else:
-                                st.warning(f"⚠️ Tem certeza que deseja deletar {cooperativa.get_razao()}?")
+                                st.warning(f"Tem certeza que deseja deletar {cooperativa.get_razao()}?")
                                 st.session_state[f"confirmar_delete_{cooperativa_id}"] = True
             else:
                 st.info("Nenhuma cooperativa cadastrada.")
