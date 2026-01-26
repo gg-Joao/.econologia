@@ -27,4 +27,5 @@ O sistema informa que o morador não possui pontos suficientes.
 
 Fluxo de exceção: Recompensa indisponível
 O sistema informa que a recompensa não está disponível.
-Modelo de interação associado: Diagrama de sequência.
+
+Modelo de interação associado: Diagrama de Comunicação.
