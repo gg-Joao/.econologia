@@ -132,6 +132,10 @@ class IndexUI:
             st.session_state.tela = "gerenciar_moradores"
             st.rerun()
         
+        if st.sidebar.button("Gerenciar Cooperativas"):
+            st.session_state.tela = "gerenciar_cooperativas"
+            st.rerun()
+        
         if st.sidebar.button("Gerenciar Coletas"):
             st.session_state.tela = "gerenciar_coletas"
             st.rerun()
@@ -197,6 +201,8 @@ class IndexUI:
                 PainelAdminUI.dashboard()
             elif st.session_state.tela == "gerenciar_moradores":
                 PainelAdminUI.gerenciar_moradores()
+            elif st.session_state.tela == "gerenciar_cooperativas":
+                PainelAdminUI.gerenciar_cooperativas()
             elif st.session_state.tela == "gerenciar_coletas":
                 PainelAdminUI.gerenciar_coletas()
             elif st.session_state.tela == "gerenciar_pontos_coleta":
