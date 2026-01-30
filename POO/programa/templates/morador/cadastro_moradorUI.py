@@ -16,6 +16,16 @@ class CadastroMoradorUI:
         senha = st.text_input("Senha", type="password")
 
         if st.button("Cadastrar"):
-            morador = Morador(id, nome=nome, email=email, fone=fone, senha=senha)
-            MoradorDAO.inserir(morador)
-            st.success("Morador cadastrado com sucesso!")
+            if not nome or not email or not fone or not senha:
+                st.error("Por favor, preencha todos os campos")
+            elif "@" not in email or not email.endswith(".com") or email.count("@") != 1:
+                st.error("Email inválido (formato: usuario@dominio.com)")
+            elif len(senha) < 6:
+                st.error("A senha deve ter no mínimo 6 caracteres")
+            else:
+                try:
+                    morador = Morador(id, nome=nome, email=email, fone=fone, senha=senha)
+                    MoradorDAO.inserir(morador)
+                    st.success("Morador cadastrado com sucesso!")
+                except ValueError as e:
+                    st.error(str(e))

@@ -1,0 +1,16 @@
+@startuml Diagrama de Sequência - Agendar Coleta
+actor Morador
+participant Sistema
+database Banco
+
+Morador -> Sistema: Escolher tipo de resíduo e data para coleta
+Sistema -> Sistema: Verificar disponibilidade da data
+alt Data disponível
+    Sistema -> Banco: Registrar agendamento
+    Banco --> Sistema: Confirmação de agendamento
+    Sistema --> Morador: Coleta agendada com sucesso
+else Data indisponível
+    Sistema --> Morador: Sugerir outra data
+    note right: Ou lidar com falha na comunicação
+end
+@enduml

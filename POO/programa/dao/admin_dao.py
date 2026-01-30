@@ -19,14 +19,19 @@ class AdminDAO:
         conn = BaseDAO.abrir()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT * FROM admin WHERE email=? AND senha=?
-        """, (email, senha))
+            SELECT * FROM admin WHERE email=?
+        """, (email,))
         dado = cursor.fetchone()
         conn.close()
 
         if dado:
-            return Admin(dado[0], dado[1], dado[2], dado[3])
-        return None
+            admin = Admin(dado[0], dado[1], dado[2], dado[3])
+            if admin.get_senha() == senha:
+                return admin
+            else:
+                raise ValueError("Senha incorreta")
+        else:
+            raise ValueError("Conta inexistente")
 
     @staticmethod
     def listar():

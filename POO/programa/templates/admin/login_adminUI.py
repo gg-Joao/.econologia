@@ -13,12 +13,12 @@ class LoginAdminUI:
             entrar = st.form_submit_button("Entrar")
 
             if entrar:
-                admin = AdminDAO.login(email, senha)
-                if admin:
+                try:
+                    admin = AdminDAO.login(email, senha)
                     st.session_state.usuario_id = admin.get_id()
                     st.session_state.usuario_nome = admin.get_nome()
                     st.session_state.tipo_usuario = "admin"
                     st.session_state.tela = "painel_admin"
                     st.rerun()
-                else:
-                    st.error("Email ou senha inválidos")
+                except ValueError as e:
+                    st.error(str(e))

@@ -1,0 +1,15 @@
+@startuml Diagrama de Sequência - Solicitar Recompensa
+actor Morador
+participant Sistema
+database Banco
+
+Morador -> Sistema: Solicitar recompensa (escolher tipo)
+Sistema -> Sistema: Verificar pontos acumulados do morador
+alt Pontos suficientes
+    Sistema -> Banco: Registrar solicitação de recompensa
+    Banco --> Sistema: Confirmação
+    Sistema --> Morador: Recompensa solicitada com sucesso
+else Pontos insuficientes
+    Sistema --> Morador: Mensagem de pontos insuficientes
+end
+@enduml

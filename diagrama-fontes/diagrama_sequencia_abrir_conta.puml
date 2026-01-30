@@ -1,0 +1,17 @@
+@startuml Diagrama de Sequência - Abrir Conta
+actor Usuário
+participant Sistema
+database Banco
+
+Usuário -> Sistema: Selecionar opção de abrir conta
+Usuário -> Sistema: Informar dados pessoais (nome, email, senha, etc.)
+Sistema -> Sistema: Validar dados (completude, formato)
+alt Dados válidos
+    Sistema -> Banco: Cadastrar conta
+    Banco --> Sistema: Confirmação de cadastro
+    Sistema --> Usuário: Conta criada com sucesso
+else Dados incompletos ou inválidos
+    Sistema --> Usuário: Solicitar correção dos dados
+    note right: Ou exibir mensagem "Dados inválidos ou e-mail já cadastrado"
+end
+@enduml

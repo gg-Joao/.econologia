@@ -14,12 +14,12 @@ class LoginMoradorUI:
             entrar = st.form_submit_button("Entrar")
 
             if entrar:
-                morador = MoradorDAO.login(email, senha)
-                if morador:
+                try:
+                    morador = MoradorDAO.login(email, senha)
                     st.session_state.usuario_id = morador.get_id()
                     st.session_state.usuario_nome = morador.get_nome()
                     st.session_state.tipo_usuario = "morador"
                     st.session_state.tela = "painel_morador"
                     st.rerun()
-                else:
-                    st.error("Email ou senha inválidos")
+                except ValueError as e:
+                    st.error(str(e))

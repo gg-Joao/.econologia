@@ -5,6 +5,10 @@ class CooperativaDAO:
 
     @staticmethod
     def inserir(coop):
+        if CooperativaDAO.verificar_email(coop.get_email()):
+            raise ValueError("Email já cadastrado")
+        if CooperativaDAO.verificar_cnpj(coop.get_cnpj()):
+            raise ValueError("CNPJ já cadastrado")
         conn = BaseDAO.abrir()
         cursor = conn.cursor()
         cursor.execute("""
@@ -15,18 +19,41 @@ class CooperativaDAO:
         conn.close()
 
     @staticmethod
+    def verificar_email(email):
+        conn = BaseDAO.abrir()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM cooperativa WHERE email = ?", (email,))
+        dado = cursor.fetchone()
+        conn.close()
+        return dado is not None
+
+    @staticmethod
+    def verificar_cnpj(cnpj):
+        conn = BaseDAO.abrir()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM cooperativa WHERE cnpj = ?", (cnpj,))
+        dado = cursor.fetchone()
+        conn.close()
+        return dado is not None
+
+    @staticmethod
     def login(email, senha):
         conn = BaseDAO.abrir()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT * FROM cooperativa WHERE email=? AND senha=?
-        """, (email, senha))
+            SELECT * FROM cooperativa WHERE email=?
+        """, (email,))
         dado = cursor.fetchone()
         conn.close()
 
         if dado:
-            return cooperativa(dado[0], dado[1], dado[2], dado[3], dado[4], dado[5], dado[6])
-        return None
+            coop = cooperativa(dado[0], dado[1], dado[2], dado[3], dado[4], dado[5], dado[6])
+            if coop.get_senha() == senha:
+                return coop
+            else:
+                raise ValueError("Senha incorreta")
+        else:
+            raise ValueError("Conta inexistente")
 
     @staticmethod
     def listar():

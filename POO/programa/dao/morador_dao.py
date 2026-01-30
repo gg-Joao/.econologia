@@ -5,6 +5,8 @@ class MoradorDAO:
 
     @staticmethod
     def inserir(obj):
+        if MoradorDAO.verificar_email(obj.get_email()):
+            raise ValueError("Email já cadastrado")
         conn = BaseDAO.abrir()
         cursor = conn.cursor()
         cursor.execute("""
@@ -15,18 +17,32 @@ class MoradorDAO:
         conn.close()
     
     @staticmethod
+    def verificar_email(email):
+        conn = BaseDAO.abrir()
+        cursor = conn.cursor()
+        cursor.execute("SELECT id FROM morador WHERE email = ?", (email,))
+        dado = cursor.fetchone()
+        conn.close()
+        return dado is not None
+    
+    @staticmethod
     def login(email, senha):
         conn = BaseDAO.abrir()
         cursor = conn.cursor()
         cursor.execute("""
-            SELECT * FROM morador WHERE email=? AND senha=?
-        """, (email, senha))
+            SELECT * FROM morador WHERE email=?
+        """, (email,))
         dado = cursor.fetchone()
         conn.close()
 
         if dado:
-            return Morador(dado[0], dado[1], dado[2], dado[3], dado[4], dado[5])
-        return None
+            morador = Morador(dado[0], dado[1], dado[2], dado[3], dado[4], dado[5])
+            if morador.get_senha() == senha:
+                return morador
+            else:
+                raise ValueError("Senha incorreta")
+        else:
+            raise ValueError("Conta inexistente")
 
     @staticmethod
     def listar():

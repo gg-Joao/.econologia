@@ -13,12 +13,12 @@ class LoginCooperativaUI:
             entrar = st.form_submit_button("Entrar")
 
             if entrar:
-                cooperativa = CooperativaDAO.login(email, senha)
-                if cooperativa:
+                try:
+                    cooperativa = CooperativaDAO.login(email, senha)
                     st.session_state.usuario_id = cooperativa.get_id()
                     st.session_state.usuario_nome = cooperativa.get_razao()
                     st.session_state.tipo_usuario = "cooperativa"
                     st.session_state.tela = "painel_cooperativa"
                     st.rerun()
-                else:
-                    st.error("Email ou senha inválidos")
+                except ValueError as e:
+                    st.error(str(e))

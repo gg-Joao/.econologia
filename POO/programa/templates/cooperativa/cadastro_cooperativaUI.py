@@ -21,6 +21,8 @@ class CadastroCooperativaUI:
             if cadastrar:
                 if not cnpj or not email or not endereco or not fone or not senha:
                     st.error("Por favor, preencha todos os campos")
+                elif "@" not in email or not email.endswith(".com") or email.count("@") != 1:
+                    st.error("Email inválido (formato: usuario@dominio.com)")
                 elif senha != confirmar_senha:
                     st.error("As senhas não coincidem")
                 elif len(senha) < 6:
@@ -37,5 +39,7 @@ class CadastroCooperativaUI:
                         )
                         CooperativaDAO.inserir(nova_cooperativa)
                         st.success("Cooperativa cadastrada com sucesso! Faça login para continuar.")
+                    except ValueError as e:
+                        st.error(str(e))
                     except Exception as e:
                         st.error(f"Erro ao cadastrar: {str(e)}")

@@ -22,7 +22,11 @@ class CadastroAdminUI:
             
             if cadastrar:
                 if nome and email and senha:
-                    if senha == confirmar_senha:
+                    if "@" not in email or not email.endswith(".com") or email.count("@") != 1:
+                        st.error("Email inválido (formato: usuario@dominio.com)")
+                    elif len(senha) < 6:
+                        st.error("A senha deve ter no mínimo 6 caracteres")
+                    elif senha == confirmar_senha:
                         admins = AdminDAO.listar()
                         email_existe = any(a.get_email() == email for a in admins) if admins else False
                         
