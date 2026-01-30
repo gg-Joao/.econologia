@@ -5,6 +5,7 @@ from dao.coleta_dao import ColetaDAO
 from dao.recompensa_dao import RecompensaDAO
 from dao.solicitacao_recompensa_dao import SolicitacaoRecompensaDAO
 from dao.pontocoleta_dao import PontoColetaDAO
+from dao.cooperativa_dao import CooperativaDAO
 from utils.data_util import DataUtil
 
 class PainelAdminUI:
@@ -136,7 +137,7 @@ class PainelAdminUI:
                             with col2:
                                 if st.button("Confirmar", key=f"confirmar_{coleta.get_id()}", use_container_width=True):
                                     coleta.set_confirmado(1)
-                                    coleta.set_pontos(10)  # Pontos padrão para coleta confirmada
+                                    coleta.set_pontos(10) 
                                     ColetaDAO.atualizar(coleta)
                                     st.success("Coleta confirmada!")
                                     st.rerun()
@@ -443,3 +444,125 @@ class PainelAdminUI:
                         st.write(f"{morador.get_nome()} - {recompensa.get_nome()}")
         else:
             st.info("Nenhuma solicitação de recompensa.")
+    
+    @staticmethod
+    def gerenciar_cooperativas():
+        st.header("Gerenciar Cooperativas")
+        
+        tab1, tab2, tab3 = st.tabs(["Ver Todas", "Criar Nova", "Editar/Deletar"])
+
+        with tab1:
+            cooperativas = CooperativaDAO.listar()
+            
+            if cooperativas:
+                st.subheader(f"Total de Cooperativas: {len(cooperativas)}")
+                dados = []
+                for c in cooperativas:
+                    dados.append({
+                        "ID": c.get_id(),
+                        "Razão Social": c.get_razao(),
+                        "CNPJ": c.get_cnpj(),
+                        "Email": c.get_email(),
+                        "Telefone": c.get_fone(),
+                        "Endereço": c.get_endereco()
+                    })
+                
+                st.dataframe(dados, use_container_width=True)
+            else:
+                st.info("Nenhuma cooperativa cadastrada.")
+
+        with tab2:
+            st.subheader("Cadastrar Nova Cooperativa")
+            
+            with st.form("form_nova_cooperativa"):
+                razao_social = st.text_input("Razão Social*", placeholder="Nome da cooperativa")
+                cnpj = st.text_input("CNPJ*", placeholder="00.000.000/0000-00")
+                email = st.text_input("Email*", placeholder="exemplo@cooperativa.com")
+                fone = st.text_input("Telefone*", placeholder="(00) 00000-0000")
+                endereco = st.text_area("Endereço*", placeholder="Rua, Número, Bairro, Cidade, Estado")
+                senha = st.text_input("Senha*", type="password", placeholder="Digite uma senha segura")
+                confirmar_senha = st.text_input("Confirmar Senha*", type="password", placeholder="Confirme a senha")
+                
+                if st.form_submit_button("Cadastrar Cooperativa", use_container_width=True):
+                    if not razao_social or not cnpj or not email or not fone or not endereco or not senha:
+                        st.error("Preencha todos os campos obrigatórios!")
+                    elif senha != confirmar_senha:
+                        st.error("As senhas não coincidem!")
+                    else:
+                        from models.cooperativa import cooperativa
+                        nova_cooperativa = cooperativa(
+                            razaoSocial=razao_social,
+                            cnpj=cnpj,
+                            email=email,
+                            fone=fone,
+                            endereco=endereco,
+                            senha=senha
+                        )
+                        
+                        try:
+                            CooperativaDAO.inserir(nova_cooperativa)
+                            st.success("Cooperativa cadastrada com sucesso!")
+                            st.rerun()
+                        except Exception as e:
+                            st.error(f"Erro ao cadastrar cooperativa: {str(e)}")
+        with tab3:
+            cooperativas = CooperativaDAO.listar()
+            
+            if cooperativas:
+                st.subheader("Selecione uma Cooperativa")
+                
+                opcoes = [f"{c.get_id()} - {c.get_razao()}" for c in cooperativas]
+                cooperativa_selecionada = st.selectbox("Cooperativa:", opcoes, key="selecao_coop")
+                
+                cooperativa_id = int(cooperativa_selecionada.split(" - ")[0])
+                cooperativa = CooperativaDAO.buscar_por_id(cooperativa_id)
+                
+                if cooperativa:
+                    st.divider()
+                    
+                    col1, col2 = st.columns(2)
+                    
+                    with col1:
+                        st.subheader("Editar Dados")
+                        with st.form(f"form_editar_cooperativa_{cooperativa_id}"):
+                            razao_social = st.text_input("Razão Social", value=cooperativa.get_razao())
+                            cnpj = st.text_input("CNPJ", value=str(cooperativa.get_cnpj()))
+                            email = st.text_input("Email", value=cooperativa.get_email())
+                            fone = st.text_input("Telefone", value=str(cooperativa.get_fone()))
+                            endereco = st.text_area("Endereço", value=cooperativa.get_endereco())
+                            
+                            if st.form_submit_button("Salvar Alterações", use_container_width=True):
+                                cooperativa.set_razao(razao_social)
+                                cooperativa.set_cnpj(cnpj)
+                                cooperativa.set_email(email)
+                                cooperativa.set_fone(fone)
+                                cooperativa.set_endereco(endereco)
+                                
+                                try:
+                                    CooperativaDAO.atualizar(cooperativa)
+                                    st.success("Cooperativa atualizada com sucesso!")
+                                    st.rerun()
+                                except Exception as e:
+                                    st.error(f"Erro ao atualizar: {str(e)}")
+                    
+                    with col2:
+                        st.subheader("Informações Atuais")
+                        st.write(f"**ID:** {cooperativa.get_id()}")
+                        st.write(f"**Razão Social:** {cooperativa.get_razao()}")
+                        st.write(f"**CNPJ:** {cooperativa.get_cnpj()}")
+                        st.write(f"**Email:** {cooperativa.get_email()}")
+                        st.write(f"**Telefone:** {cooperativa.get_fone()}")
+                        st.write(f"**Endereço:** {cooperativa.get_endereco()}")
+                        
+                        st.divider()
+                        
+                        if st.button("Deletar Cooperativa", use_container_width=True, type="secondary"):
+                            if st.session_state.get(f"confirmar_delete_{cooperativa_id}", False):
+                                CooperativaDAO.deletar(cooperativa_id)
+                                st.success("Cooperativa deletada com sucesso!")
+                                st.rerun()
+                            else:
+                                st.warning(f"Tem certeza que deseja deletar {cooperativa.get_razao()}?")
+                                st.session_state[f"confirmar_delete_{cooperativa_id}"] = True
+            else:
+                st.info("Nenhuma cooperativa cadastrada.")

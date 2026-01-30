@@ -1,0 +1,31 @@
+CASO DE USO: Resgatar Recompensas
+
+Atores envolvidos: Usuário (Morador)
+
+Pré-condições: O morador está autenticado e possui pontos acumulados.
+
+Pós-condições: A recompensa é resgatada e os pontos são atualizados.
+
+Fluxo principal:
+
+1. O morador acessa a funcionalidade Resgatar Recompensas.
+
+2. O sistema exibe as recompensas disponíveis.
+
+3. O morador seleciona uma recompensa.
+
+4. O sistema verifica o saldo de pontos.
+
+5. O sistema realiza o resgate.
+
+6. O sistema atualiza o saldo de pontos.
+
+7. O sistema confirma o resgate ao morador.
+
+Fluxo alternativo: Pontos insuficientes
+O sistema informa que o morador não possui pontos suficientes.
+
+Fluxo de exceção: Recompensa indisponível
+O sistema informa que a recompensa não está disponível.
+
+Modelo de interação associado: Diagrama de Comunicação.

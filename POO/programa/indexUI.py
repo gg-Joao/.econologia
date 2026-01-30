@@ -132,6 +132,10 @@ class IndexUI:
             st.session_state.tela = "gerenciar_moradores"
             st.rerun()
         
+        if st.sidebar.button("Gerenciar Cooperativas"):
+            st.session_state.tela = "gerenciar_cooperativas"
+            st.rerun()
+        
         if st.sidebar.button("Gerenciar Coletas"):
             st.session_state.tela = "gerenciar_coletas"
             st.rerun()
@@ -191,13 +195,14 @@ class IndexUI:
             elif st.session_state.tela == "perfil_morador":
                 PerfilMoradorUI.main()
             else:
-                # Painel padrão
                 PainelMoradorUI.main()
         elif st.session_state.tipo_usuario == "admin":
             if st.session_state.tela == "dashboard_admin":
                 PainelAdminUI.dashboard()
             elif st.session_state.tela == "gerenciar_moradores":
                 PainelAdminUI.gerenciar_moradores()
+            elif st.session_state.tela == "gerenciar_cooperativas":
+                PainelAdminUI.gerenciar_cooperativas()
             elif st.session_state.tela == "gerenciar_coletas":
                 PainelAdminUI.gerenciar_coletas()
             elif st.session_state.tela == "gerenciar_pontos_coleta":

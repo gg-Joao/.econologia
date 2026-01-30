@@ -1,0 +1,26 @@
+CASO DE USO: Confirmar Agendamento
+
+Atores envolvidos: Usuário (Cooperativa)
+
+Pré-condições: Existe agendamento pendente no sistema.
+
+Pós-condições: O agendamento é confirmado ou recusado.
+
+Fluxo principal:
+
+  1. A cooperativa acessa o sistema.
+
+  2. A cooperativa visualiza a lista de agendamentos pendentes.
+
+  3. A cooperativa seleciona um agendamento.
+
+  4. A cooperativa confirma a coleta.
+
+  5. O sistema atualiza o status do agendamento.
+
+Fluxo alternativo: Recusa do agendamento
+A cooperativa recusa o agendamento e o sistema notifica o morador.
+
+Fluxo de exceção: Agendamento expirado
+O sistema informa que o agendamento expirou e encerra o processo.
+Modelo de interação associado: Diagrama de comunicação.

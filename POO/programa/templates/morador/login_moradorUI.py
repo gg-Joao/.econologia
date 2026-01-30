@@ -10,7 +10,6 @@ class LoginMoradorUI:
         with st.form("login_morador"):
             email = st.text_input("Email")
             senha = st.text_input("Senha", type="password")
-
             entrar = st.form_submit_button("Entrar")
 
             if entrar:

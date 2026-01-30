@@ -10,8 +10,7 @@ class MinhasColetasUI:
         if coletas:
             
             confirmadas = [c for c in coletas if c.get_confirmado()]
-            pendentes = [c for c in coletas if not c.get_confirmado()]
-        
+            pendentes = [c for c in coletas if not c.get_confirmado()]        
             st.subheader(f"Confirmadas ({len(confirmadas)})")
             if confirmadas:
                 for coleta in confirmadas:

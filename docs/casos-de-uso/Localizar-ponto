@@ -1,0 +1,20 @@
+ ## CASO DE USO: Localizar Pontos de Coleta
+
+Atores envolvidos: Usuário (Morador)
+
+Pré-condições: O morador está cadastrado e autenticado.
+
+Pós-condições: Os pontos de coleta são exibidos ao morador.
+
+Fluxo principal:
+  1. O morador acessa a funcionalidade de localizar os Pontos de Coleta.
+  2. O sistema identifica a localização do morador.
+  3. O sistema busca os pontos de coleta próximos.
+  4. O sistema exibe os pontos de coleta disponíveis.
+
+Fluxo alternativo: Localização não disponível
+O morador informa o endereço manualmente e o sistema realiza a busca.
+
+Fluxo de exceção: Nenhum ponto de coleta encontrado
+O sistema informa que não há pontos de coleta na região.
+Modelo de interação associado: Diagrama de comunicação.
