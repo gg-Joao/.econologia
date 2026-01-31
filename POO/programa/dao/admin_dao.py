@@ -20,7 +20,7 @@ class AdminDAO:
         cursor = conn.cursor()
         cursor.execute("""
             SELECT * FROM admin WHERE email=?
-        """, (email,))
+        """, (email))
         dado = cursor.fetchone()
         conn.close()
 

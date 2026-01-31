@@ -4,7 +4,7 @@ participant Sistema
 database Banco
 
 Usuário -> Sistema: Selecionar opção de abrir conta
-Usuário -> Sistema: Informar dados pessoais (nome, email, senha, etc.)
+Usuário -> Sistema: Informar dados pessoais (nome, email, senha)
 Sistema -> Sistema: Validar dados (completude, formato)
 alt Dados válidos
     Sistema -> Banco: Cadastrar conta
