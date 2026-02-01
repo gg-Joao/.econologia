@@ -3,30 +3,16 @@ actor Usuário
 participant Sistema
 database Banco
 
-Usuário -> Sistema: Selecionar opção Abrir Conta (Morador ou Cooperativa)
-
-alt Morador seleciona Abrir Conta de Morador
-    Usuário -> Sistema: Informar dados (nome, e-mail, telefone, senha)
-    Sistema -> Sistema: Validar dados (completude, formato, e-mail único)
-    alt Dados válidos
-        Sistema -> Banco: Cadastrar Morador (nome, e-mail, telefone, senha)
-        Banco --> Sistema: Confirmação de cadastro
-        Sistema --> Usuário: Conta de Morador criada com sucesso
-    else Dados incompletos ou inválidos
-        Sistema --> Usuário: Solicitar correção dos dados (Morador)
-        note right: Exibir mensagem "Dados inválidos ou e-mail já cadastrado"
-    end
-else Cooperativa seleciona Abrir Conta de Cooperativa
-    Usuário -> Sistema: Informar dados (razão social, CNPJ, e-mail, endereço, telefone, senha)
-    Sistema -> Sistema: Validar dados (completude, formato, CNPJ, e-mail único)
-    alt Dados válidos
-        Sistema -> Banco: Cadastrar Cooperativa (razão social, CNPJ, e-mail, endereço, telefone, senha)
-        Banco --> Sistema: Confirmação de cadastro
-        Sistema --> Usuário: Conta de Cooperativa criada com sucesso
-    else Dados incompletos ou inválidos
-        Sistema --> Usuário: Solicitar correção dos dados (Cooperativa)
-        note right: Exibir mensagem "Dados inválidos ou CNPJ/e-mail já cadastrado"
-    end
+Usuário -> Sistema: Selecionar opção de abrir conta
+Usuário -> Sistema: Informar dados pessoais (nome, email, senha, etc.)
+Sistema -> Sistema: Validar dados (completude, formato)
+alt Dados válidos
+    Sistema -> Banco: Cadastrar conta
+    Banco --> Sistema: Confirmação de cadastro
+    Sistema --> Usuário: Conta criada com sucesso
+else Dados incompletos ou inválidos
+    Sistema --> Usuário: Solicitar correção dos dados
+    note right: Ou exibir mensagem "Dados inválidos ou e-mail já cadastrado"
 end
 
 @enduml
