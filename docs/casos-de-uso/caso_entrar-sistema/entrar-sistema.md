@@ -8,8 +8,11 @@ Pós-condições: O usuário é autenticado e tem acesso ao sistema.
 
 Fluxo principal:
  1. O usuário acessa a opção Entrar no Sistema.
+
  2. O usuário informa login e senha.
+
  3. O sistema valida as credenciais.
+ 
  4. O sistema libera o acesso ao sistema.
 
 Fluxo alternativo: Senha incorreta
