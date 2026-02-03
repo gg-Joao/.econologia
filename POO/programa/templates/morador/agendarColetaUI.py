@@ -15,6 +15,7 @@ class AgendarColetaUI:
         opcoes_pontos = {ponto.get_nome(): ponto.get_id() for ponto in pontos}
         
         with st.form("agendar_coleta_form"):
+            id_morador = st.session_state.usuario_id
             ponto_selecionado = st.selectbox("Escolha o local", list(opcoes_pontos.keys()))
             data_coleta = st.date_input("Data")
             descricao = st.text_area("Materiais a coletar", placeholder="Ex: 2kg de papel, 1kg de plástico...")
@@ -30,7 +31,8 @@ class AgendarColetaUI:
                     coleta = Coleta(
                         data=str(data_coleta),
                         descricao=descricao,
-                        confirmado=0
+                        confirmado=0,
+                        id_morador=id_morador
                     )
                     ColetaDAO.inserir(coleta)
                     st.success("Coleta agendada!")

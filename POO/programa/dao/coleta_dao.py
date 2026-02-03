@@ -9,9 +9,9 @@ class ColetaDAO(BaseDAO):
         conn = BaseDAO.abrir()
         cursor = conn.cursor()
         cursor.execute(
-            "INSERT INTO coleta (data, confirmado, descricao, pontos) VALUES (?, ?, ?, ?)",
+            "INSERT INTO coleta (data, confirmado, descricao, pontos, id_morador) VALUES (?, ?, ?, ?, ?)",
             (obj.get_data() if isinstance(obj.get_data(), str) else obj.get_data().isoformat(), 
-             int(obj.get_confirmado()), obj.get_desc(), obj.get_pontos()) )
+             int(obj.get_confirmado()), obj.get_desc(), obj.get_pontos()), obj.get_id_morador())
         conn.commit()
         conn.close()
 
@@ -25,7 +25,7 @@ class ColetaDAO(BaseDAO):
 
         lista = []
         for d in dados:
-            coleta = Coleta(d[0], d[1], bool(d[2]), d[3], d[4])
+            coleta = Coleta(d[0], d[1], bool(d[2]), d[3], d[4], d[5])
             lista.append(coleta)
         return lista
 
@@ -39,6 +39,18 @@ class ColetaDAO(BaseDAO):
 
         if dado:
             return Coleta(dado[0], dado[1], bool(dado[2]), dado[3], dado[4])
+        return None
+
+    @staticmethod
+    def buscar_por_id_morador(id_morador):
+        conn = BaseDAO.abrir()
+        cursor = conn.cursor()
+        cursor.execute("SELECT * FROM coleta WHERE id_morador = ?", (id_morador,))
+        dado = cursor.fetchone()
+        conn.close()
+
+        if dado:
+            return Coleta(dado[0], dado[1], bool(dado[2]), dado[3], dado[4], dado[5])
         return None
 
     @staticmethod
