@@ -12,21 +12,16 @@ class PainelCooperativaUI:
     def dashboard():
         st.header("Painel")
         st.subheader(f"Bem-vindo, {st.session_state.usuario_nome}!")
-        
         col1, col2, col3 = st.columns(3)
-        
         with col1:
             total_coletas = len(ColetaDAO.listar())
             st.metric("Coletas", total_coletas)
-        
         with col2:
             total_moradores = len(MoradorDAO.listar())
             st.metric("Moradores", total_moradores)
-        
         with col3:
             total_recompensas = len(RecompensaDAO.listar())
             st.metric("Recompensas", total_recompensas)
-
     @staticmethod
     def confirmar_resgate():
         """Confirmar resgate de recompensas"""

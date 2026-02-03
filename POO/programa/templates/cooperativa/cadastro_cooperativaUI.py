@@ -13,12 +13,10 @@ class CadastroCooperativaUI:
             cnpj = st.text_input("CNPJ (14 dígitos)")
             email = st.text_input("Email (5-100 caracteres)")
             endereco = st.text_area("Endereço (5-200 caracteres)")
-            fone = st.text_input("Telefone (10-11 dígitos)")
+            fone = st.text_input("Telefone")
             senha = st.text_input("Senha (6-20 caracteres)", type="password")
             confirmar_senha = st.text_input("Confirmar Senha", type="password")
-
             cadastrar = st.form_submit_button("Cadastrar")
-
             if cadastrar:
                 if not cnpj or not email or not endereco or not fone or not senha:
                     st.error("Por favor, preencha todos os campos")
