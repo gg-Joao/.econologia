@@ -133,6 +133,7 @@ class PainelAdminUI:
                                 st.write(f"**ID:** {coleta.get_id()}")
                                 st.write(f"**Data:** {DataUtil.formatar_data(coleta.get_data())}")
                                 st.write(f"**Descrição:** {coleta.get_descricao()}")
+                                st.write(f"**Morador:**" {morador_dao.buscar_por_id(coleta.get_id_morador())})
                             
                             with col2:
                                 if st.button("Confirmar", key=f"confirmar_{coleta.get_id()}", use_container_width=True):
@@ -156,7 +157,7 @@ class PainelAdminUI:
                 st.subheader(f"Coletas Confirmadas ({len(confirmadas)})")
                 
                 if confirmadas:
-                    opcoes = [f"{c.get_id()} - {DataUtil.formatar_data(c.get_data())} - {c.get_descricao()[:30]}" for c in confirmadas]
+                    opcoes = [f"{c.get_id()} - {DataUtil.formatar_data(c.get_data())} - {c.get_descricao()[:30]} - {morador_dao.buscar_por_id(c.get_id_morador())}" for c in confirmadas]
                     coleta_selecionada = st.selectbox("Selecione uma coleta para editar:", opcoes)
                     
                     coleta_id = int(coleta_selecionada.split(" - ")[0])
